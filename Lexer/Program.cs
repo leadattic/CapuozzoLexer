@@ -10,7 +10,7 @@ namespace CapuozzoLanguge
         public static void Main(string[] args)
         {
             List<Token> tokens = Lexer.Lexer.RunLexer(null);
-            
+            Bytecode.Bytecode.GenerateBytecode(tokens);
         }
     }
 }
@@ -112,6 +112,10 @@ namespace Lexer
                             tokens.Add(new Token(TokenType.SLASH, null, line));
                             buffer = "";
                         }
+                        break;
+                    case "#":
+                        tokens.Add(new Token(TokenType.HASH, null, line));
+                        buffer = "";
                         break;
                     case "=" :
                         if (code[current] == '=')
@@ -227,7 +231,7 @@ namespace Lexer
                                 buffer = "";
                             }
                         }
-                    }else if (BeginsWithNumber(buffer)) // TODO: implement floats
+                    }else if (BeginsWithNumber(buffer))
                     {
                         if (Char.IsDigit(code[current]))
                         {
@@ -283,30 +287,62 @@ namespace Lexer
         
     }
 
-    enum TokenType
+    public enum TokenType
     {
-        // Single-character tokens.
-        LEFT_PAREN, RIGHT_PAREN, LEFT_BRACE, RIGHT_BRACE,
-        COMMA, DOT, MINUS, PLUS, SEMICOLON, SLASH, STAR,
+        // Single character tokens
+        LEFT_PAREN = 1,
+        RIGHT_PAREN = 2,
+        LEFT_BRACE = 3,
+        RIGHT_BRACE = 4,
+        COMMA = 5,
+        DOT = 6,
+        MINUS = 7,
+        PLUS = 8,
+        SEMICOLON = 9,
+        SLASH = 10,
+        STAR = 11,
+        HASH = 12,
 
-        // One or two character tokens.
-        NEGATE, NEGATE_EQUAL,
-        EQUAL, EQUAL_EQUAL,
-        GREATER, GREATER_EQUAL,
-        LESS, LESS_EQUAL,
-        ARROW,
+// One or two character tokens
+        NEGATE = 13,
+        NEGATE_EQUAL = 14,
+        EQUAL = 15,
+        EQUAL_EQUAL = 16,
+        GREATER = 17,
+        GREATER_EQUAL = 18,
+        LESS = 19,
+        LESS_EQUAL = 20,
+        ARROW = 21,
 
-        // Literals.
-        IDENTIFIER, STRING, INT, FLOAT, 
+// Literals
+        IDENTIFIER = 22,
+        STRING = 23,
+        INT = 24,
+        FLOAT = 25,
 
-        // Keywords.
-        AND, ELSE, FALSE, FUNC, FOR, IF, NULL, OR,
-        PRINT, RETURN, TRUE, VARDEFINITION, WHILE, STRDEFINITION, INTDEFINITION, FLOATDEFINITION, 
+// Keywords
+        AND = 26,
+        ELSE = 27,
+        FALSE = 28,
+        FUNC = 29,
+        FOR = 30,
+        IF = 31,
+        NULL = 32,
+        OR = 33,
+        PRINT = 34,
+        RETURN = 35,
+        TRUE = 36,
+        VARDEFINITION = 37,
+        WHILE = 38,
+        STRDEFINITION = 39,
+        INTDEFINITION = 40,
+        FLOATDEFINITION = 41,
 
-        EOF
+// End of file
+        EOF = 0
     }
 
-    class Token
+    public class Token
     {
         public TokenType type;
         public string? text;
@@ -322,7 +358,24 @@ namespace Lexer
 }
 
 
-namespace Linter
+namespace Bytecode
 {
-    
+    public class Bytecode
+    {
+        public static void GenerateBytecode(List<Token> tokens)
+        {
+            int currentLine = 0;
+            string buffer = "";
+            for (int i = 0; i < tokens.Count; i++)
+            {
+                if (tokens[i].line != currentLine)
+                {
+                    buffer += ";line " + tokens[i].line + "\n";
+                    currentLine = tokens[i].line;
+                }
+            }
+        }
+
+    }
 }
+    
