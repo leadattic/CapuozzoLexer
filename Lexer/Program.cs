@@ -1,7 +1,7 @@
 ﻿using System.Collections.Immutable;
 using System.Diagnostics.CodeAnalysis;
 using System.Text.RegularExpressions;
-using Lexer;
+using CapuozzoLexer;
 
 namespace CapuozzoLanguge
 {
@@ -9,13 +9,13 @@ namespace CapuozzoLanguge
     {
         public static void Main(string[] args)
         {
-            List<Token> tokens = Lexer.Lexer.RunLexer(null);
+            List<Token> tokens = CapuozzoLexer.Lexer.RunLexer(null);
             Bytecode.Bytecode.GenerateBytecode(tokens);
         }
     }
 }
 /*
- * Regarding all code in the namespace Lexer:
+ * Regarding all code in the namespace CapuozzoLexer:
  * Copyright (c) 2015 Robert Nystrom
  *  Permission is hereby granted, free of charge, to any person obtaining a copy
     of this software and associated documentation files (the "Software"), to
@@ -35,7 +35,7 @@ namespace CapuozzoLanguge
     FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS
     IN THE SOFTWARE.
  */
-namespace Lexer
+namespace CapuozzoLexer
 {
     
     class Lexer

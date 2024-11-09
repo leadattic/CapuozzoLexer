@@ -24,7 +24,7 @@ SOFTWARE.
 
 Notices for derived code:
 
-Parts of the code found within the `Lexer` namespace in this project is based on the work of Robert Nystrom and incorporates elements from his original code. The following license applies to it:
+Parts of the code found within the `CapuozzoLexer` namespace in this project is based on the work of Robert Nystrom and incorporates elements from his original code. The following license applies to it:
 
 Copyright (c) 2015 Robert Nystrom
 Permission is hereby granted, free of charge, to any person obtaining a copy
