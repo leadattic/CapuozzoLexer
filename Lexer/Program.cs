@@ -53,13 +53,16 @@ namespace CapuozzoLexer
             keywords.Add("false", TokenType.FALSE);
             keywords.Add("null", TokenType.NULL);
             keywords.Add("if", TokenType.IF);
-            keywords.Add("print", TokenType.PRINT);
             keywords.Add("for", TokenType.FOR);
             keywords.Add("while", TokenType.WHILE);
             keywords.Add("return", TokenType.RETURN);
             keywords.Add("fn", TokenType.FUNC);
-            keywords.Add("int", TokenType.INT);
             keywords.Add("var", TokenType.VARDEFINITION);
+            keywords.Add("str", TokenType.STRDEFINITION);
+            keywords.Add("int", TokenType.INTDEFINITION);
+            keywords.Add("float", TokenType.FLOATDEFINITION);
+            keywords.Add("import", TokenType.IMPORT);
+            keywords.Add("limport", TokenType.DLLIMPORT);
             
             return Lex("print(\"Hello World!\"); \"fromdapentodakingtoderingtothebling\"");
         }
@@ -287,11 +290,11 @@ namespace CapuozzoLexer
                 
             }
             tokens.Add(new Token(TokenType.EOF, null, line));
-            for (int i = 0; i < tokens.Count; i++)
+            // for (int i = 0; i < tokens.Count; i++)
             {
-                Console.WriteLine(tokens[i].type + " " + tokens[i].text);
+              //  Console.WriteLine(tokens[i].type + " " + tokens[i].text);
             }
-            Console.WriteLine(line);
+            // Console.WriteLine(line);
             return tokens;
             
         }
@@ -351,7 +354,7 @@ namespace CapuozzoLexer
         IF = 31,
         NULL = 32,
         OR = 33,
-        PRINT = 34,
+        PRINT = 34,  // Does not currently have an implemantation
         RETURN = 35,
         TRUE = 36,
         VARDEFINITION = 37,
@@ -360,7 +363,7 @@ namespace CapuozzoLexer
         INTDEFINITION = 40,
         FLOATDEFINITION = 41,
         IMPORT = 42,
-        CIMPORT = 43,
+        DLLIMPORT = 43,
         
         
 
@@ -396,10 +399,13 @@ namespace Bytecode
             {
                 if (tokens[i].line != currentLine)
                 {
-                    buffer += ";line " + tokens[i].line + "\n";
+                    buffer += "; line " + tokens[i].line + "\n";
                     currentLine = tokens[i].line;
                 }
+                buffer += (int) tokens[i].type + " " +tokens[i].text + "\n";
             }
+            buffer += "; endoffile\n\n";
+            System.Console.WriteLine(buffer);
         }
 
     }
